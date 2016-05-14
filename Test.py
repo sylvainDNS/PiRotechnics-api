@@ -7,11 +7,23 @@ GPIO.setup(17, GPIO.OUT, initial=False)
 
 print(GPIO.input(4))
 print(GPIO.input(17))
-time.sleep(2)
+
+time.sleep(4)
+
 GPIO.output(4, True)
 GPIO.output(17, False)
 
 print(GPIO.input(4))
 print(GPIO.input(17))
-time.sleep(2)
+
+time.sleep(4)
+
+GPIO.cleanup()
+GPIO.setmode(GPIO.BCM)
+
+p = GPIO.PWM(4, 0.5)
+p.start(50)
+
+input('push key')
+p.stop()
 GPIO.cleanup()
