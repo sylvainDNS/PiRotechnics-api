@@ -26,6 +26,5 @@ GPIO.setup(4, GPIO.OUT, initial=True)
 p = GPIO.PWM(4, 0.5)
 p.start(50)
 
-input('push key')
 p.stop()
 GPIO.cleanup()
