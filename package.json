@@ -1,0 +1,14 @@
+{
+  "name": "FireLauncher",
+  "version": "0.1.0",
+  "description": "Personal project to launch firework with a Raspberry PI 3",
+  "main": "app.js",
+  "repository": "https://github.com/sylvainDNS/FireLauncher.git",
+  "author": "Sylvain DENYSE",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.16.2",
+    "mongoose": "^5.0.7",
+    "onoff": "^2.0.0"
+  }
+}
