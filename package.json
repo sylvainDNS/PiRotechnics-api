@@ -1,14 +1,17 @@
 {
-  "name": "FireLauncher",
-  "version": "0.1.0",
-  "description": "Personal project to launch firework with a Raspberry PI 3",
-  "main": "app.js",
-  "repository": "https://github.com/sylvainDNS/FireLauncher.git",
-  "author": "Sylvain DENYSE",
+  "name": "back",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "watch": "webpack --watch",
+    "start": "nodemon dist/main.js"
+  },
   "license": "MIT",
   "dependencies": {
-    "express": "^4.16.2",
-    "mongoose": "^5.0.7",
-    "onoff": "^2.0.0"
+    "onoff": "^3.0.1"
+  },
+  "devDependencies": {
+    "webpack": "^4.3.0",
+    "webpack-cli": "^2.0.13"
   }
 }
