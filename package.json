@@ -1,18 +1,28 @@
 {
-  "name": "back",
-  "version": "1.0.0",
-  "main": "index.js",
-  "scripts": {
-    "watch": "webpack --watch",
-    "start": "nodemon dist/main.js"
-  },
-  "license": "MIT",
-  "dependencies": {
-    "hapi": "^17.3.1",
-    "onoff": "^3.0.1"
-  },
-  "devDependencies": {
-    "webpack": "^4.3.0",
-    "webpack-cli": "^2.0.13"
-  }
+    "name": "back",
+    "version": "1.0.0",
+    "main": "index.js",
+    "scripts": {
+        "watch": "webpack --watch --mode development",
+        "start": "nodemon dist/main.js",
+        "build": "webpack --mode production"
+    },
+    "license": "MIT",
+    "dependencies": {
+        "aws-sdk": "^2.227.1",
+        "common-env": "^6.1.0",
+        "hapi": "^17.3.1",
+        "moment": "^2.22.1",
+        "onoff": "^3.0.1",
+        "pg-hstore": "^2.3.2",
+        "sequelize": "^4.37.6",
+        "sha256": "^0.2.0",
+        "sqlite3": "^4.0.0",
+        "tedious": "^2.3.1",
+        "uuid": "^3.2.1"
+    },
+    "devDependencies": {
+        "webpack": "^4.3.0",
+        "webpack-cli": "^2.0.13"
+    }
 }

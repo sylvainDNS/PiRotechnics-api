@@ -1,11 +1,13 @@
-const Gpio = require('onoff').Gpio
+import start from './server'
+import { gpio } from './mock/gpio'
+import env from 'common-env'
 
+const config = env().getOrElseAll({
+    node: {
+        env: 'development'
+    }
+})
 
-const canals = []
+console.log(gpio(config.node.env))
 
-for (let i = 2; i < 14; i++) {
-    canals.push(new Gpio(i, 'high'))
-}
-for (let i = 16; i < 20; i++) {
-    canals.push(new Gpio(i, 'high'))
-}
+start().start()
