@@ -1,9 +1,11 @@
 import env from 'common-env'
 import { Server } from 'hapi'
-import Sequelize from 'sequelize'
 import uuidv4 from 'uuid/v4'
 import sha256 from 'sha256'
 import moment from 'moment'
+import { Database } from 'sqlite3'
+import executeSql from './utils/sqlite'
+import { showSchema } from './schema/show'
 
 export default function start() {
     const config = env().getOrElseAll({
@@ -11,11 +13,16 @@ export default function start() {
             host: 'localhost',
             port: 4444
         },
-        sqlite: {
-            host: 'localhost',
-            database: 'pyro',
+        sqlite3: {
             path: './../piro.db'
         }
+    })
+
+    const db = new Database(config.sqlite3.path, err => {
+        if (err) {
+            console.error(err.message)
+        }
+        console.log('Database %s connected !', config.sqlite3.path)
     })
 
     const server = new Server({
@@ -24,55 +31,21 @@ export default function start() {
         routes: { cors: { origin: ['*'] } }
     })
 
-    const db = new Sequelize(config.sqlite.database, {
-        host: config.sqlite.host,
-        dialect: 'sqlite',
-        storage: config.sqlite.path,
-        operatorsAliases: false
-    })
+    server.route({
+        method: 'POST',
+        path: '/show',
+        options: { validate: { payload: showSchema } },
+        handler: (request, h) => {
+            const { name, password } = request.payload
+            const params = [uuidv4(), name, moment().format(), sha256(password)]
+            const query =
+                'INSERT INTO show (show_id, name, createdAt, password) VALUES (?, ?, ?, ?);'
+            console.log(params)
+            console.log(executeSql(db, query, params))
 
-    const show = db.define('show', {
-        show_id: {
-            type: Sequelize.UUIDV4,
-            primaryKey: true
-        },
-        name: {
-            type: Sequelize.STRING,
-            unique: true
-        },
-        createdAt: Sequelize.NOW,
-        updatedAt: Sequelize.DATE,
-        password: Sequelize.STRING
+            return 'yep'
+        }
     })
-
-    const showStep = db.define('showStep', {
-        showStep_id: {
-            type: Sequelize.UUIDV4,
-            primaryKey: true
-        },
-        show_id: {
-            type: Sequelize.UUIDV4,
-            references: {
-                model: show,
-                key: 'show_id'
-            }
-        },
-        cueOrder: Sequelize.INTEGER,
-        name: Sequelize.STRING,
-        canal: Sequelize.INTEGER,
-        createdAt: Sequelize.NOW,
-        updatedAt: Sequelize.DATE,
-        password: Sequelize.STRING
-    })
-
-    db.sync().then(() =>
-        show.create({
-            show_id: uuidv4(),
-            name: 'YopYop',
-            password: sha256('yopyopyop'),
-            updatedAt: moment()
-        })
-    )
 
     return server
 }
