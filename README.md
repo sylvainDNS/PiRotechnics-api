@@ -8,7 +8,7 @@ export NODE_ENV=development|production
 export HAPI_HOST=localhost
 export HAPI_PORT=4444
 
-export SQLITE3_PATH=./../piro.db
+export SQLITE3_PATH=../piro.db
 ```
 
 ## Specs

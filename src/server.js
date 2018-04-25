@@ -14,7 +14,7 @@ export default function start() {
             port: 4444
         },
         sqlite3: {
-            path: './../piro.db'
+            path: '../piro.db'
         }
     })
 
