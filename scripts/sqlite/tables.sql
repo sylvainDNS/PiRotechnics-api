@@ -1,4 +1,4 @@
-CREATE TABLE show ( 
+CREATE TABLE IF NOT EXISTS show ( 
     show_id TEXT, 
     name TEXT unique not null, 
     createdAt DATETIME DEFAULT CURRENT_TIMESTAMP,
@@ -6,8 +6,7 @@ CREATE TABLE show (
     password TEXT,
     CONSTRAINT show_pk PRIMARY KEY (show_id)
 );
-
-CREATE TABLE showStep ( 
+CREATE TABLE IF NOT EXISTS showStep ( 
     showStep_id TEXT, 
     show_id TEXT,
     cueOrder INTEGER not null,
