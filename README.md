@@ -2,9 +2,8 @@
 
 ## TODO
 
-*   Finish routes
-*   Handle errors with Hapi
-*   Split and organize code
+*   Test routes
+*   Implement canals
 
 ## Environment variable sample
 

@@ -1,13 +1,26 @@
 import start from './server'
 import { gpio } from './mock/gpio'
-import env from 'common-env'
+import env from 'common-env/withLogger'
+import 'source-map-support'
 
-const config = env().getOrElseAll({
+export const config = env(console).getOrElseAll({
     node: {
         env: 'development'
+    },
+    hapi: {
+        host: 'localhost',
+        port: 4444
+    },
+    sqlite3: {
+        path: 'piro.db'
     }
 })
-
-console.log(gpio(config.node.env))
-
-start().start()
+console.log(config)
+start()
+    .start()
+    .then(
+        res => console.log('Server listening on %s:%s', config.hapi.host, config.hapi.port),
+        err => {
+            console.error(err)
+        }
+    )

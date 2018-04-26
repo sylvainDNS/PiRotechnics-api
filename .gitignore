@@ -62,4 +62,4 @@ typings/
 
 dist
 .vscode
-piro.*
+piro_dev.db
