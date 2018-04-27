@@ -1,15 +1,18 @@
 import { Database } from 'sqlite3'
-import { config } from '../index'
+import { config } from './config'
 
-const db = () => {
-    return new Database(config.sqlite3.path, err => {
+const initDb = () => {
+    const db = new Database(config.sqlite.path, err => {
         if (err) {
             console.error(err.message)
         }
-        console.log('Database %s connected !', config.sqlite3.path)
+        console.log('Database %s connected !', config.sqlite.path)
     })
+    db.run('PRAGMA foreign_keys = ON')
+
+    return db
 }
-export const database = db()
+export const database = initDb()
 
 export const executeSql = (db, query, params) => {
     return new Promise((resolve, reject) => {

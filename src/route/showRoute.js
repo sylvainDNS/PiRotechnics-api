@@ -18,4 +18,9 @@ export const showRoute = server => {
         path: '/show/{show_id}',
         handler: showHandler.set
     })
+    server.route({
+        method: 'delete',
+        path: '/show/{show_id}',
+        handler: showHandler.remove
+    })
 }

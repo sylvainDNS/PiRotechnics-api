@@ -1,21 +1,7 @@
 import start from './server'
 import { gpio } from './mock/gpio'
-import env from 'common-env/withLogger'
-import 'source-map-support'
+import { config } from './utils/config'
 
-export const config = env(console).getOrElseAll({
-    node: {
-        env: 'development'
-    },
-    hapi: {
-        host: 'localhost',
-        port: 4444
-    },
-    sqlite3: {
-        path: 'piro.db'
-    }
-})
-console.log(config)
 start()
     .start()
     .then(

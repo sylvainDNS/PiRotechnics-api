@@ -7,7 +7,7 @@ import Boom from 'boom'
 
 export const stepHandler = {
     get: (request, h) => {
-        const query = 'SELECT * FROM step'
+        const query = 'SELECT * FROM step ORDER BY show_id, cueOrder'
         const reply = recover(
             executeSql(database, query, []),
             res => res,
@@ -42,6 +42,20 @@ export const stepHandler = {
 
         const reply = recover(
             executeSql(database, query, params),
+            res => res,
+            err => {
+                return Boom.badRequest(err)
+            }
+        )
+
+        return reply
+    },
+    remove: (request, h) => {
+        const { step_id } = request.params
+        const query = 'DELETE FROM step WHERE step_id = ?;'
+
+        const reply = recover(
+            executeSql(database, query, step_id),
             res => res,
             err => {
                 return Boom.badRequest(err)

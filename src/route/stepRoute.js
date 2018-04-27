@@ -19,4 +19,9 @@ export const stepRoute = server => {
         options: { validate: { payload: stepSchema } },
         handler: stepHandler.set
     })
+    server.route({
+        method: 'DELETE',
+        path: '/step/{step_id}',
+        handler: stepHandler.remove
+    })
 }

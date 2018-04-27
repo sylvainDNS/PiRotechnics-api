@@ -46,5 +46,19 @@ export const showHandler = {
         )
 
         return reply
+    },
+    remove: (request, h) => {
+        const { show_id } = request.params
+        const query = 'DELETE FROM show WHERE show_id = ?;'
+
+        const reply = recover(
+            executeSql(database, query, show_id),
+            res => res,
+            err => {
+                return Boom.badRequest(err)
+            }
+        )
+
+        return reply
     }
 }
