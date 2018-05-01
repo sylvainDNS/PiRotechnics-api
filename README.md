@@ -2,7 +2,7 @@
 
 ## TODO
 
-*   Test routes
+*   Add Swagger
 *   Implement canals
 
 ## Environment variable sample
