@@ -1,5 +1,5 @@
 import { Server } from 'hapi'
-import io from 'socket.io'
+import Io from 'socket.io'
 import HapiSwagger from 'hapi-swagger'
 import Vision from 'vision'
 import Inert from 'inert'
@@ -34,7 +34,7 @@ export default function start() {
         .then(() => {
             server.start()
                 .then(
-                    res => console.log('Server listening on %s:%s', config.hapi.host, config.hapi.port),
+                    res => console.log('Server listening on', server.info.uri),
                     err => {
                         console.error(err)
                     }
@@ -42,7 +42,7 @@ export default function start() {
         })
 
 
-    const socket = io(server.listener)
+    const socket = Io(server.listener)
 
     showRoute(server)
     stepRoute(server)

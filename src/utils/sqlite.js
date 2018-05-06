@@ -22,7 +22,7 @@ export const executeSql = (db, query, params) => {
                 resolve(rows)
             })
         } else {
-            db.run(query, params, function(err) {
+            db.run(query, params, (err) => {
                 if (err) reject(err)
                 resolve(this.lastID)
             })
