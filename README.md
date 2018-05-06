@@ -2,7 +2,11 @@
 
 ## TODO
 
-*   Implement canals
+- [x]   Finish routes
+- [x]   Handle errors with Hapi (Boom)
+- [x]   Test routes
+- [x]   Add Swagger
+- [ ]   Implement canals
 
 ## Environment variable sample
 
