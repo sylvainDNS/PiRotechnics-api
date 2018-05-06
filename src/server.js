@@ -19,7 +19,7 @@ export default function start() {
     const swaggerOptions = {
         info: {
             title: 'PiRotechnics API Documentation',
-            version: '0.1',
+            version: '1.0',
         },
     }
 

@@ -5,23 +5,43 @@ export const stepRoute = server => {
     server.route({
         method: 'GET',
         path: '/step',
-        handler: stepHandler.get
+        config: {
+            handler: stepHandler.get,
+            description: 'Get steps',
+            notes: 'Returns all steps stored in database',
+            tags: ['api']
+        }
     })
     server.route({
         method: 'POST',
         path: '/step',
-        options: { validate: { payload: stepSchema } },
-        handler: stepHandler.add
+        config: {
+            handler: stepHandler.add,
+            description: 'Add a step',
+            notes: 'Add a step in database',
+            tags: ['api'],
+            validate: { payload: stepSchema }
+        }
     })
     server.route({
         method: 'PUT',
         path: '/step/{step_id}',
-        options: { validate: { payload: stepSchema } },
-        handler: stepHandler.set
+        config: {
+            handler: stepHandler.set,
+            description: 'Update a step',
+            notes: 'Update a step corresponding to {step_id} in database',
+            tags: ['api'],
+            validate: { payload: stepSchema }
+        }
     })
     server.route({
         method: 'DELETE',
         path: '/step/{step_id}',
-        handler: stepHandler.remove
+        config: {
+            handler: stepHandler.remove,
+            description: 'Delete a step',
+            notes: 'Delete a step corresponding to {step_id} in database',
+            tags: ['api']
+        }
     })
 }
