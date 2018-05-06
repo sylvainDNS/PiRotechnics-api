@@ -2,7 +2,6 @@
 
 ## TODO
 
-*   Add Swagger
 *   Implement canals
 
 ## Environment variable sample
