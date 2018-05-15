@@ -6,7 +6,9 @@
 - [x]   Handle errors with Hapi (Boom)
 - [x]   Test routes
 - [x]   Add Swagger
-- [ ]   Implement canals
+- [x]   Implement canals
+- [ ]   Really mock GPIO
+- [ ]   Handle data with socket
 
 ## Environment variable sample
 

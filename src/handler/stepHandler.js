@@ -1,7 +1,7 @@
 import { database, executeSql } from '../utils/sqlite'
 import { recover } from '../utils/recover'
 import uuidv4 from 'uuid/v4'
-import moment, { relativeTimeRounding } from 'moment'
+import moment from 'moment'
 import sha256 from 'sha256'
 import Boom from 'boom'
 
@@ -18,10 +18,10 @@ export const stepHandler = {
         return reply
     },
     add: (request, h) => {
-        const { show_id, cueOrder, name, canal } = request.payload
-        const params = [uuidv4(), show_id, cueOrder, name, canal, moment().format()]
+        const { show_id, cueOrder, name, time, channel } = request.payload
+        const params = [uuidv4(), show_id, cueOrder, name, channel, time, moment().format()]
         const query =
-            'INSERT INTO step (step_id, show_id, cueOrder, name, canal, createdAt) VALUES (?, ?, ?, ?, ?, ?);'
+            'INSERT INTO step (step_id, show_id, cueOrder, name, channel, time, createdAt) VALUES (?, ?, ?, ?, ?, ?, ?);'
 
         const reply = recover(
             executeSql(database, query, params),
@@ -34,11 +34,11 @@ export const stepHandler = {
         return reply
     },
     set: (request, h) => {
-        const { show_id, cueOrder, name, canal } = request.payload
+        const { show_id, cueOrder, name, time, channel } = request.payload
         const { step_id } = request.params
-        const params = [show_id, cueOrder, name, canal, moment().format(), step_id]
+        const params = [show_id, cueOrder, name, channel, time, moment().format(), step_id]
         const query =
-            'UPDATE step SET show_id = ?, cueOrder = ?, name = ?, canal = ?, updatedAt = ? WHERE step_id = ?;'
+            'UPDATE step SET show_id = ?, cueOrder = ?, name = ?, channel = ?, time = ?, updatedAt = ? WHERE step_id = ?;'
 
         const reply = recover(
             executeSql(database, query, params),

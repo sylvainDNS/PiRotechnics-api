@@ -12,8 +12,11 @@ export const stepSchema = {
         .min(3)
         .max(30)
         .required(),
-    canal: Joi.number()
+    channel: Joi.number()
         .min(1)
         .max(28)
+        .required(),
+    time: Joi.number()
+        .min(1)
         .required()
 }

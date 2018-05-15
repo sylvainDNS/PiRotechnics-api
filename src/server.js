@@ -7,6 +7,7 @@ import { showRoute } from './route/showRoute'
 import { stepRoute } from './route/stepRoute'
 import { launcherSocket } from './socket/launcherSocket'
 import { monitorSocket } from './socket/monitorSocket'
+import { initChannels, launch } from './model/channel'
 import { config } from './utils/config'
 
 export default function start() {
@@ -41,11 +42,12 @@ export default function start() {
                 )
         })
 
-
     const socket = Io(server.listener)
 
     showRoute(server)
     stepRoute(server)
+
+    // initChannels()
 
     launcherSocket(socket)
     monitorSocket(socket)
