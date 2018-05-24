@@ -17,7 +17,7 @@ export const database = initDb()
 export const executeSql = (db, query, params) => {
     return new Promise((resolve, reject) => {
         if (query.toUpperCase().includes('SELECT')) {
-            db.all(query, (err, rows) => {
+            db.all(query, params, (err, rows) => {
                 if (err) reject(err)
                 resolve(rows)
             })
