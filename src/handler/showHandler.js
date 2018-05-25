@@ -4,6 +4,7 @@ import uuidv4 from 'uuid/v4'
 import moment from 'moment'
 import sha256 from 'sha256'
 import Boom from 'boom'
+import { isNull } from 'util';
 
 export const showHandler = {
     get: (request, h) => {
@@ -19,8 +20,11 @@ export const showHandler = {
     },
     add: (request, h) => {
         const { name, password } = request.payload
-        const params = [uuidv4(), name, moment().format(), sha256(password)]
-        const query = 'INSERT INTO show (show_id, name, createdAt, password) VALUES (?, ?, ?, ?);'
+        const params = [uuidv4(), name, moment().format()]
+        if (password != '' && !isNull(password))
+            params.push(sha256(password))
+
+        const query = password != '' && !isNull(password) ? 'INSERT INTO show (show_id, name, createdAt, password) VALUES (?, ?, ?, ?);' : 'INSERT INTO show (show_id, name, createdAt) VALUES (?, ?, ?);'
 
         const reply = recover(
             executeSql(database, query, params),
@@ -35,8 +39,14 @@ export const showHandler = {
     set: (request, h) => {
         const { name, password } = request.payload
         const { show_id } = request.params
-        const params = [name, moment().format(), sha256(password), show_id]
-        const query = 'UPDATE show SET name = ?, updatedAt = ?, password = ? WHERE show_id = ?;'
+        const params = [name, moment().format()]
+
+        if (password != '' && !isNull(password))
+            params.push(sha256(password))
+        params.push(show_id)
+
+        const query = password != '' && !isNull(password) ? 'UPDATE show SET name = ?, updatedAt = ?, password = ? WHERE show_id = ?;' : 'UPDATE show SET name = ?, updatedAt = ? WHERE show_id = ?;'
+
         const reply = recover(
             executeSql(database, query, params),
             res => res,
