@@ -57,6 +57,22 @@ export const showHandler = {
 
         return reply
     },
+    getShowStep: (request, h) => {
+        const { show_id } = request.params
+        const params = [show_id]
+
+        const query = 'SELECT * FROM step WHERE show_id = ?;'
+
+        const reply = recover(
+            executeSql(database, query, params),
+            res => res,
+            err => {
+                return Boom.badRequest(err)
+            }
+        )
+
+        return reply
+    },
     remove: (request, h) => {
         const { show_id } = request.params
         const query = 'DELETE FROM show WHERE show_id = ?;'

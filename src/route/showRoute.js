@@ -22,7 +22,16 @@ export const showRoute = server => {
             tags: ['api'],
             validate: { payload: showSchema }
         }
-
+    })
+    server.route({
+        method: 'GET',
+        path: '/show/{show_id}/step',
+        config: {
+            handler: showHandler.getShowStep,
+            description: 'Get steps from a show',
+            notes: 'Get show\'s step corresponding to {show_id}',
+            tags: ['api'],
+        }
     })
     server.route({
         method: 'PUT',
