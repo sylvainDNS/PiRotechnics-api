@@ -61,8 +61,7 @@ export const showHandler = {
         const { show_id } = request.params
         const params = [show_id]
 
-        const query = 'SELECT * FROM step WHERE show_id = ?;'
-
+        const query = 'SELECT step_id, cueOrder, name, channel, time, createdAt, updatedAt FROM step WHERE show_id = ? ORDER BY cueOrder;'
         const reply = recover(
             executeSql(database, query, params),
             res => res,
