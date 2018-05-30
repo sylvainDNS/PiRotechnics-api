@@ -1,6 +1,8 @@
-import { Gpio } from 'onoff';
+import { gpio } from '../mock/gpio';
+import { config } from '../utils/config'
 
 const channels = []
+const Gpio = gpio(config.node.env)
 
 export const initChannels = () => {
 
