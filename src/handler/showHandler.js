@@ -8,9 +8,8 @@ import { isNull } from 'util';
 
 export const showHandler = {
     get: (request, h) => {
-        const query = 'SELECT * FROM show'
         const reply = recover(
-            executeSql(database, query, []),
+            executeSql(database, 'SELECT * FROM show', []),
             res => res,
             err => {
                 return Boom.badRequest(err)
@@ -39,16 +38,25 @@ export const showHandler = {
     set: (request, h) => {
         const { name, password } = request.payload
         const { show_id } = request.params
-        const params = [name, moment().format()]
 
-        if (password != '' && !isNull(password))
-            params.push(sha256(password))
-        params.push(show_id)
-
-        const query = password != '' && !isNull(password) ? 'UPDATE show SET name = ?, updatedAt = ?, password = ? WHERE show_id = ?;' : 'UPDATE show SET name = ?, updatedAt = ? WHERE show_id = ?;'
+        const prms = (() => {
+            if (password != '' && !isNull(password)) {
+                executeSql(
+                    database,
+                    'UPDATE show SET name = ?, updatedAt = ?, password = ? WHERE show_id = ?;',
+                    [name, moment().format(), sha256(password), show_id]
+                )
+            } else {
+                executeSql(
+                    database,
+                    'UPDATE show SET name = ?, updatedAt = ? WHERE show_id = ?;',
+                    [name, moment().format(), show_id]
+                )
+            }
+        })()
 
         const reply = recover(
-            executeSql(database, query, params),
+            prms,
             res => res,
             err => {
                 return Boom.badRequest(err)
@@ -61,9 +69,8 @@ export const showHandler = {
         const { show_id } = request.params
         const params = [show_id]
 
-        const query = 'SELECT step_id, cueOrder, name, channel, time, createdAt, updatedAt FROM step WHERE show_id = ? ORDER BY cueOrder;'
         const reply = recover(
-            executeSql(database, query, params),
+            executeSql(database, 'SELECT step_id, cueOrder, name, channel, time, createdAt, updatedAt FROM step WHERE show_id = ? ORDER BY cueOrder;', params),
             res => res,
             err => {
                 return Boom.badRequest(err)
@@ -74,10 +81,9 @@ export const showHandler = {
     },
     remove: (request, h) => {
         const { show_id } = request.params
-        const query = 'DELETE FROM show WHERE show_id = ?;'
 
         const reply = recover(
-            executeSql(database, query, show_id),
+            executeSql(database, 'DELETE FROM show WHERE show_id = ?;', show_id),
             res => res,
             err => {
                 return Boom.badRequest(err)

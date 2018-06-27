@@ -1,4 +1,4 @@
-import { monitorHandler } from '../handler/monitorHandler'
+import { WSMonitorHandler } from '../handler/WSMonitorHandler'
 
 export const monitorSocket = socket => {
     const monitor = socket.of('/monitor')
@@ -6,6 +6,6 @@ export const monitorSocket = socket => {
     monitor.on('connection', (client) => {
         console.log('Monitor connected !')
 
-        client.on('fire', monitorHandler.fire)
+        client.on('fire', WSMonitorHandler.fire)
     })
 }

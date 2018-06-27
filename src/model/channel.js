@@ -1,17 +1,25 @@
 import { gpio } from '../mock/gpio';
 import { config } from '../utils/config'
 
-const channels = []
+let channels = []
+
 const Gpio = gpio(config.node.env)
 
 export const initChannels = () => {
 
     const init = (min, max, switched) => {
-        for (let i = min; i <= max; i++) {
-            const channel = { gpio: new Gpio(i, 'out'), switch: switched }
-            channels.push(channel)
-        }
+        const tmpChannels =
+            Array.from({ length: (max - min) })
+                .map((_, index) => {
+                    return {
+                        gpio: new Gpio(index + min, 'out'),
+                        switch: switched
+                    }
+                })
+
+        channels = channels.concat(tmpChannels)
     }
+
 
     init(2, 13, null)
     init(16, 18, null)

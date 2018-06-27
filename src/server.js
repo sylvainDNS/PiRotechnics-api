@@ -47,7 +47,7 @@ export default function start() {
     showRoute(server)
     stepRoute(server)
 
-    // initChannels()
+    initChannels()
 
     launcherSocket(socket)
     monitorSocket(socket)

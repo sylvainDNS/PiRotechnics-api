@@ -2,7 +2,7 @@ import { database, executeSql } from '../utils/sqlite'
 import { recover } from '../utils/recover'
 import { launch } from '../model/channel'
 
-export const launcherHandler = {
+export const WSLauncherHandler = {
     fire: data => {
         const query = 'SELECT * FROM step WHERE show_id = ? ORDER BY cueOrder'
         const params = [data.show_id]
