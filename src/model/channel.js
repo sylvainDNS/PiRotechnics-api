@@ -6,25 +6,26 @@ let channels = []
 const Gpio = gpio(config.node.env)
 
 export const initChannels = () => {
+    if (channels.length == 0) {
+        const init = (min, max, switched) => {
+            const tmpChannels =
+                Array.from({ length: (max - min) })
+                    .map((_, index) => {
+                        return {
+                            gpio: new Gpio(index + min, 'out'),
+                            switch: switched
+                        }
+                    })
 
-    const init = (min, max, switched) => {
-        const tmpChannels =
-            Array.from({ length: (max - min) })
-                .map((_, index) => {
-                    return {
-                        gpio: new Gpio(index + min, 'out'),
-                        switch: switched
-                    }
-                })
+            channels = channels.concat(tmpChannels)
+        }
 
-        channels = channels.concat(tmpChannels)
+
+        init(2, 13, null)
+        init(16, 18, null)
+        init(2, 13, new Gpio(19, 'out'))
+        init(16, 18, new Gpio(19, 'out'))
     }
-
-
-    init(2, 13, null)
-    init(16, 18, null)
-    init(2, 13, new Gpio(19, 'out'))
-    init(16, 18, new Gpio(19, 'out'))
 }
 
 export const launch = (number, time) => {
