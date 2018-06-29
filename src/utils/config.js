@@ -10,5 +10,9 @@ export const config = env().getOrElseAll({
     },
     sqlite: {
         path: 'piro.db'
+    },
+    swagger: {
+        schemes: 'http',
+        host: 'localhost'
     }
 })

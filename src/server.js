@@ -22,6 +22,8 @@ export default function start() {
             title: 'PiRotechnics API Documentation',
             version: '1.0',
         },
+        schemes: [].fill(config.swagger.schemes),
+        host: config.swagger.host
     }
 
     server.register([

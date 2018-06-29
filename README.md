@@ -18,6 +18,9 @@ export NODE_ENV=development|production
 export HAPI_HOST=localhost
 export HAPI_PORT=4444
 
+export SWAGGER_HOST=localhost
+export SWAGGER_SCHEMES=http
+
 export SQLITE3_PATH=piro.db
 ```
 
