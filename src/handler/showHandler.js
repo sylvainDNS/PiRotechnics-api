@@ -19,14 +19,24 @@ export const showHandler = {
     },
     add: (request, h) => {
         const { name, password } = request.payload
-        const params = [uuidv4(), name, moment().format()]
-        if (password != '' && !isNull(password))
-            params.push(sha256(password))
-
-        const query = password != '' && !isNull(password) ? 'INSERT INTO show (show_id, name, createdAt, password) VALUES (?, ?, ?, ?);' : 'INSERT INTO show (show_id, name, createdAt) VALUES (?, ?, ?);'
+        const prms = (() => {
+            if (password != '' && !isNull(password)) {
+                executeSql(
+                    database,
+                    'INSERT INTO show (show_id, name, createdAt, password) VALUES (?, ?, ?, ?);',
+                    [uuidv4(), name, moment().format(), sha256(password)]
+                )
+            } else {
+                executeSql(
+                    database,
+                    'INSERT INTO show (show_id, name, createdAt) VALUES (?, ?, ?);',
+                    [uuidv4(), name, moment().format()]
+                )
+            }
+        })()
 
         const reply = recover(
-            executeSql(database, query, params),
+            prms,
             res => res,
             err => {
                 return Boom.conflict(err)
