@@ -19,15 +19,16 @@ export const showHandler = {
     },
     add: (request, h) => {
         const { name, password } = request.payload
+
         const prms = (() => {
             if (password != '' && !isNull(password)) {
-                executeSql(
+                return executeSql(
                     database,
                     'INSERT INTO show (show_id, name, createdAt, password) VALUES (?, ?, ?, ?);',
                     [uuidv4(), name, moment().format(), sha256(password)]
                 )
             } else {
-                executeSql(
+                return executeSql(
                     database,
                     'INSERT INTO show (show_id, name, createdAt) VALUES (?, ?, ?);',
                     [uuidv4(), name, moment().format()]
@@ -39,7 +40,8 @@ export const showHandler = {
             prms,
             res => res,
             err => {
-                return Boom.conflict(err)
+                return Boom.conflict
+                    (err)
             }
         )
 
@@ -51,13 +53,13 @@ export const showHandler = {
 
         const prms = (() => {
             if (password != '' && !isNull(password)) {
-                executeSql(
+                return executeSql(
                     database,
                     'UPDATE show SET name = ?, updatedAt = ?, password = ? WHERE show_id = ?;',
                     [name, moment().format(), sha256(password), show_id]
                 )
             } else {
-                executeSql(
+                return executeSql(
                     database,
                     'UPDATE show SET name = ?, updatedAt = ? WHERE show_id = ?;',
                     [name, moment().format(), show_id]
@@ -77,10 +79,11 @@ export const showHandler = {
     },
     getShowStep: (request, h) => {
         const { show_id } = request.params
-        const params = [show_id]
 
         const reply = recover(
-            executeSql(database, 'SELECT step_id, cueOrder, name, channel, time, createdAt, updatedAt FROM step WHERE show_id = ? ORDER BY cueOrder;', params),
+            executeSql(database,
+                'SELECT step_id, cueOrder, name, channel, time, createdAt, updatedAt FROM step WHERE show_id = ? ORDER BY cueOrder;',
+                [show_id]),
             res => res,
             err => {
                 return Boom.badRequest(err)
@@ -93,7 +96,9 @@ export const showHandler = {
         const { show_id } = request.params
 
         const reply = recover(
-            executeSql(database, 'DELETE FROM show WHERE show_id = ?;', show_id),
+            executeSql(database,
+                'DELETE FROM show WHERE show_id = ?;',
+                show_id),
             res => res,
             err => {
                 return Boom.badRequest(err)

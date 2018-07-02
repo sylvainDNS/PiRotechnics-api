@@ -17,10 +17,10 @@ export const stepHandler = {
     },
     add: (request, h) => {
         const { show_id, cueOrder, name, time, channel } = request.payload
-        const params = [uuidv4(), show_id, cueOrder, name, channel, time, moment().format()]
 
         const reply = recover(
-            executeSql(database, 'INSERT INTO step (step_id, show_id, cueOrder, name, channel, time, createdAt) VALUES (?, ?, ?, ?, ?, ?, ?);', params),
+            executeSql(database, 'INSERT INTO step (step_id, show_id, cueOrder, name, channel, time, createdAt) VALUES (?, ?, ?, ?, ?, ?, ?);',
+                [uuidv4(), show_id, cueOrder, name, channel, time, moment().format()]),
             res => res,
             err => {
                 return Boom.conflict(err)
@@ -32,10 +32,11 @@ export const stepHandler = {
     set: (request, h) => {
         const { show_id, cueOrder, name, time, channel } = request.payload
         const { step_id } = request.params
-        const params = [show_id, cueOrder, name, channel, time, moment().format(), step_id]
 
         const reply = recover(
-            executeSql(database, 'UPDATE step SET show_id = ?, cueOrder = ?, name = ?, channel = ?, time = ?, updatedAt = ? WHERE step_id = ?;', params),
+            executeSql(database,
+                'UPDATE step SET show_id = ?, cueOrder = ?, name = ?, channel = ?, time = ?, updatedAt = ? WHERE step_id = ?;',
+                [show_id, cueOrder, name, channel, time, moment().format(), step_id]),
             res => res,
             err => {
                 return Boom.badRequest(err)
