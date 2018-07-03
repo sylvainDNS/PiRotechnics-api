@@ -1,5 +1,7 @@
 **LIVE DEMO AVAILABLE : [https://api.pirotechnics.sylvaindenyse.me](https://api.pirotechnics.sylvaindenyse.me 'PiRotechnics API')**
 
+![Project progress](https://img.shields.io/badge/Project%20progress-60%25-blue.svg)
+
 # PiRotechnics
 
 ## TODO
