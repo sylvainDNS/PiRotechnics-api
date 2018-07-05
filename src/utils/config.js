@@ -13,6 +13,6 @@ export const config = env().getOrElseAll({
     },
     swagger: {
         schemes: 'http',
-        host: 'localhost'
+        host: 'localhost:4444'
     }
 })
