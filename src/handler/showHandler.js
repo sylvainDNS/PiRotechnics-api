@@ -82,7 +82,7 @@ export const showHandler = {
 
         const reply = recover(
             executeSql(database,
-                'SELECT step_id, cueOrder, name, channel, time, createdAt, updatedAt FROM step WHERE show_id = ? ORDER BY cueOrder;',
+                'SELECT step_id, time, createdAt FROM step WHERE show_id = ? ORDER BY createdAt;',
                 [show_id]),
             res => res,
             err => {
