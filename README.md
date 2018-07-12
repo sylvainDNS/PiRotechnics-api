@@ -1,4 +1,4 @@
-**LIVE DEMO AVAILABLE** (selfhosted, builded and deployed with Jenkins) **: [https://api.pirotechnics.sylvaindenyse.me](https://goo.gl/NgMB71 'PiRotechnics API')**
+**LIVE DEMO AVAILABLE** (selfhosted, built and deployed with Jenkins) **: [https://api.pirotechnics.sylvaindenyse.me](https://goo.gl/NgMB71 'PiRotechnics API')**
 
 ![Project progress](https://img.shields.io/badge/Project%20progress-60%25-blue.svg)
 
