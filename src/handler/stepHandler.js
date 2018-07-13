@@ -7,7 +7,11 @@ import Boom from 'boom'
 export const stepHandler = {
     get: (request, h) => {
         const reply = recover(
-            executeSql(database, 'SELECT * FROM step ORDER BY show_id, createdAt', []),
+            executeSql(
+                database,
+                'SELECT * FROM step ORDER BY show_id, createdAt',
+                []
+            ),
             res => res,
             err => {
                 return Boom.badRequest(err)
@@ -19,9 +23,25 @@ export const stepHandler = {
         const { show_id, time } = request.payload
 
         const reply = recover(
-            executeSql(database, 'INSERT INTO step (step_id, show_id, time, createdAt) VALUES (?, ?, ?, ?);',
-                [uuidv4(), show_id, time, moment().format()]),
-            res => res,
+            executeSql(
+                database,
+                'INSERT INTO step (step_id, show_id, time, createdAt) VALUES (?, ?, ?, ?);',
+                [uuidv4(), show_id, time, moment().format()]
+            ),
+            res => {
+                recover(
+                    executeSql(
+                        database,
+                        'UPDATE show SET updatedAt = ? WHERE show_id = ?;',
+                        [moment().format(), show_id]
+                    ),
+                    res => res,
+                    err => {
+                        return Boom.badData(err)
+                    }
+                )
+                return res
+            },
             err => {
                 return Boom.conflict(err)
             }
@@ -34,9 +54,11 @@ export const stepHandler = {
         const { step_id } = request.params
 
         const reply = recover(
-            executeSql(database,
+            executeSql(
+                database,
                 'UPDATE step SET show_id = ?, time = ?, updatedAt = ? WHERE step_id = ?;',
-                [show_id, time, moment().format(), step_id]),
+                [show_id, time, moment().format(), step_id]
+            ),
             res => res,
             err => {
                 return Boom.badRequest(err)
@@ -49,8 +71,38 @@ export const stepHandler = {
         const { step_id } = request.params
 
         const reply = recover(
-            executeSql(database, 'DELETE FROM step WHERE step_id = ?;', step_id),
-            res => res,
+            executeSql(
+                database,
+                'SELECT show_id FROM step WHERE step_id = ?;',
+                step_id
+            ),
+            res => {
+                const show_id = res[0].show_id
+                return recover(
+                    executeSql(
+                        database,
+                        'DELETE FROM step WHERE step_id = ?;',
+                        step_id
+                    ),
+                    res => {
+                        recover(
+                            executeSql(
+                                database,
+                                'UPDATE show SET updatedAt = ? WHERE show_id = ?;',
+                                [moment().format(), show_id]
+                            ),
+                            res => res,
+                            err => {
+                                return Boom.badData(err)
+                            }
+                        )
+                        return res
+                    },
+                    err => {
+                        return Boom.badRequest(err)
+                    }
+                )
+            },
             err => {
                 return Boom.badRequest(err)
             }
