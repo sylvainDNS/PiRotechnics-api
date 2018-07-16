@@ -2,18 +2,19 @@
 
 ![Project progress](https://img.shields.io/badge/Project%20progress-60%25-blue.svg)
 
-![PiRotechnics](src/assets/logo.png)
+![PiRotechnics](img/logo.png)
+
 # PiRotechnics
 
 ## TODO
 
-- [x]   Finish routes
-- [x]   Handle errors with Hapi (Boom)
-- [x]   Test routes
-- [x]   Add Swagger
-- [x]   Implement canals
-- [x]   Really mock GPIO
-- [ ]   Handle data with socket
+-   [x] Finish routes
+-   [x] Handle errors with Hapi (Boom)
+-   [x] Test routes
+-   [x] Add Swagger
+-   [x] Implement canals
+-   [x] Really mock GPIO
+-   [ ] Handle data with socket
 
 ## Environment variable sample
 
