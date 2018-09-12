@@ -1,31 +1,30 @@
 {
-    "name": "back",
-    "version": "1.0.0",
-    "main": "index.js",
-    "scripts": {
-        "watch": "webpack --watch --mode development",
-        "start": "nodemon dist/main.js",
-        "build": "webpack --mode production"
-    },
-    "license": "MIT",
-    "dependencies": {
-        "aws-sdk": "^2.227.1",
-        "boom": "^7.2.0",
-        "common-env": "^6.1.0",
-        "hapi": "^17.3.1",
-        "hapi-swagger": "^9.1.1",
-        "inert": "^5.1.0",
-        "joi": "^13.2.0",
-        "moment": "^2.22.1",
-        "onoff": "^3.0.1",
-        "sha256": "^0.2.0",
-        "socket.io": "^2.1.0",
-        "sqlite3": "^4.0.0",
-        "uuid": "^3.2.1",
-        "vision": "^5.3.2"
-    },
-    "devDependencies": {
-        "webpack": "^4.3.0",
-        "webpack-cli": "^2.0.13"
-    }
+  "name": "back",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "watch": "webpack --watch --mode development",
+    "start": "nodemon dist/main.js",
+    "build": "webpack --mode production"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "aws-sdk": "^2.227.1",
+    "boom": "^7.2.0",
+    "common-env": "^6.1.0",
+    "hapi": "^17.3.1",
+    "hapi-swagger": "^9.1.1",
+    "inert": "^5.1.0",
+    "joi": "^13.2.0",
+    "moment": "^2.22.1",
+    "onoff": "^3.0.1",
+    "socket.io": "^2.1.0",
+    "sqlite3": "^4.0.0",
+    "uuid": "^3.2.1",
+    "vision": "^5.3.2"
+  },
+  "devDependencies": {
+    "webpack": "^4.3.0",
+    "webpack-cli": "^2.0.13"
+  }
 }

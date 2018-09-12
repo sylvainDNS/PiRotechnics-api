@@ -3,7 +3,6 @@ CREATE TABLE show (
     name TEXT unique not null, 
     createdAt DATETIME DEFAULT CURRENT_TIMESTAMP,
     updatedAt DATETIME,
-    password TEXT,
     CONSTRAINT show_pk PRIMARY KEY (show_id)
 );
 CREATE TABLE step ( 

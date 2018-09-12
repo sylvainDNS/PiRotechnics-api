@@ -1,3 +1,3 @@
 export const WSMonitorHandler = {
-    fire: data => console.log('Fire ??')
+  fire: data => console.log('Fire ??')
 }
