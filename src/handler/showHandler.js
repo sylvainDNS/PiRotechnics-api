@@ -64,7 +64,7 @@ export const showHandler = {
     const reply = recover(
       executeSql(
         database,
-        'SELECT step_id, time, createdAt FROM step WHERE show_id = ? ORDER BY createdAt;',
+        'SELECT step_id, minutes, seconds, createdAt FROM step WHERE show_id = ? ORDER BY minutes, seconds;',
         [show_id]
       ),
       res => res,

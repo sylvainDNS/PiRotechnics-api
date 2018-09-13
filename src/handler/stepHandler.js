@@ -9,7 +9,7 @@ export const stepHandler = {
     const reply = recover(
       executeSql(
         database,
-        'SELECT * FROM step ORDER BY show_id, createdAt',
+        'SELECT * FROM step ORDER BY show_id, minutes, seconds',
         []
       ),
       res => res,
@@ -20,13 +20,13 @@ export const stepHandler = {
     return reply
   },
   add: (request, h) => {
-    const { show_id, time } = request.payload
+    const { show_id, minutes, seconds } = request.payload
 
     const reply = recover(
       executeSql(
         database,
-        'INSERT INTO step (step_id, show_id, time, createdAt) VALUES (?, ?, ?, ?);',
-        [uuidv4(), show_id, time, moment().format()]
+        'INSERT INTO step (step_id, show_id, minutes, seconds, createdAt) VALUES (?, ?, ?, ?, ?);',
+        [uuidv4(), show_id, minutes, seconds, moment().format()]
       ),
       res => {
         recover(
@@ -50,14 +50,14 @@ export const stepHandler = {
     return reply
   },
   set: (request, h) => {
-    const { show_id, time } = request.payload
+    const { show_id, minutes, seconds } = request.payload
     const { step_id } = request.params
 
     const reply = recover(
       executeSql(
         database,
-        'UPDATE step SET show_id = ?, time = ?, updatedAt = ? WHERE step_id = ?;',
-        [show_id, time, moment().format(), step_id]
+        'UPDATE step SET show_id = ?, minutes = ?, seconds = ?, updatedAt = ? WHERE step_id = ?;',
+        [show_id, minutes, seconds, moment().format(), step_id]
       ),
       res => res,
       err => {

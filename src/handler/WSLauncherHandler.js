@@ -9,9 +9,7 @@ export const WSLauncherHandler = {
     const reply = recover(
       executeSql(database, query, params),
       show => {
-        show.forEach(step => {
-          launch(show.channel, show.time)
-        })
+        launch(show)
       },
       err => {
         console.error('Something went wrong during launch ! :$\n%s', err)
